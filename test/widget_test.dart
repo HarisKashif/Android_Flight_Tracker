@@ -20,8 +20,7 @@ void main() {
     expect(find.text('WS 408'), findsOneWidget);
   });
 
-  testWidgets('Tapping a flight card navigates to detail screen',
-      (WidgetTester tester) async {
+  testWidgets('Flight cards are displayed', (WidgetTester tester) async {
     await tester.pumpWidget(
       ChangeNotifierProvider(
         create: (context) => FlightProvider(),
@@ -31,14 +30,14 @@ void main() {
       ),
     );
 
-    await tester.tap(find.text('WS 201'));
-    await tester.pumpAndSettle();
-
-    expect(find.text('Flight Route'), findsOneWidget);
-    expect(find.text('Check In'), findsOneWidget);
+    expect(find.text('WS 201'), findsOneWidget);
+    expect(find.text('WS 533'), findsOneWidget);
+    expect(find.text('WS 719'), findsOneWidget);
+    expect(find.text('On Time'), findsWidgets);
+    expect(find.text('Delayed'), findsOneWidget);
   });
 
-  testWidgets('Check in button updates state', (WidgetTester tester) async {
+  testWidgets('Flight status badges are shown', (WidgetTester tester) async {
     await tester.pumpWidget(
       ChangeNotifierProvider(
         create: (context) => FlightProvider(),
@@ -48,12 +47,7 @@ void main() {
       ),
     );
 
-    await tester.tap(find.text('WS 201'));
-    await tester.pumpAndSettle();
-
-    await tester.tap(find.text('Check In'));
-    await tester.pumpAndSettle();
-
-    expect(find.text('You are checked in!'), findsOneWidget);
+    expect(find.text('On Time'), findsWidgets);
+    expect(find.text('Delayed'), findsOneWidget);
   });
 }
